@@ -16,9 +16,9 @@ extern "C" {
           hb_tensor_t* weight,
           hb_vector_t* padding,
           hb_vector_t* strides) {
-    auto y = HBTensor<float, 1, 1, 6, 6>(output);
-    auto x = HBTensor<float, 1, 1, 8, 8>(input);
-    auto w = HBTensor<float, 1, 1, 3, 3>(weight);
+    auto y = HBTensorStatic<float, 1, 1, 6, 6>(output);
+    auto x = HBTensorStatic<float, 1, 1, 8, 8>(input);
+    auto w = HBTensorStatic<float, 1, 1, 3, 3>(weight);
 
     // Conv2d parameters
     uint32_t N = 1; // number of minibatches
