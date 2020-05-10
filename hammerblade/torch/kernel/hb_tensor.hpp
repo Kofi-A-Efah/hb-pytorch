@@ -150,6 +150,19 @@ class HBTensor {
     }
 };
 
+template <typename DT, uint32_t N, uint32_t NC, uint32_t H, uint32_t W>
+class HBTensor {
+  private:
+    DT data[N * C * H * W];
+
+  public:
+    HBTensor(hb_tensor_t* t) :
+      data((DT*) ((intptr_t) t->data)) {}
+
+    DT& operator()(uint32_t n, uint32_t c, uint32_t h, uint32_t w) {
+      return data[N*n + C*c + H*h + W*w];
+    }
+};
 
 template<typename T>
 class HBVector {
