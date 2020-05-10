@@ -16,24 +16,24 @@ extern "C" {
           hb_tensor_t* weight,
           hb_vector_t* padding,
           hb_vector_t* strides) {
-    auto y = HBTensorStatic<float, 1, 1, 6, 6>(output);
-    auto x = HBTensorStatic<float, 1, 1, 8, 8>(input);
-    auto w = HBTensorStatic<float, 1, 1, 3, 3>(weight);
-
     // Conv2d parameters
-    uint32_t N = 1; // number of minibatches
-    uint32_t Cout = 1; // number of output channels
-    uint32_t Hout = 6;
-    uint32_t Wout = 6;
-    uint32_t Cin = 1; // number of input channels
-    uint32_t Hin = 8;
-    uint32_t Win = 8;
-    uint32_t Kh = 3;
-    uint32_t Kw = 3;
-    uint32_t Sh = 1;
-    uint32_t Sw = 1;
-    uint32_t Ph = 0;
-    uint32_t Pw = 0;
+    const uint32_t N = 1; // number of minibatches
+    const uint32_t Cout = 1; // number of output channels
+    const uint32_t Hout = 6;
+    const uint32_t Wout = 6;
+    const uint32_t Cin = 1; // number of input channels
+    const uint32_t Hin = 8;
+    const uint32_t Win = 8;
+    const uint32_t Kh = 3;
+    const uint32_t Kw = 3;
+    const uint32_t Sh = 1;
+    const uint32_t Sw = 1;
+    const uint32_t Ph = 0;
+    const uint32_t Pw = 0;
+
+    auto y = HBTensorStatic<float, N, Cout, Hout, Wout>(output);
+    auto x = HBTensorStatic<float, N, Cin, Hin, Win>(input);
+    auto w = HBTensorStatic<float, Cout, Cin, Kh, Kw>(weight);
 
     // Start profiling
     bsg_cuda_print_stat_kernel_start();

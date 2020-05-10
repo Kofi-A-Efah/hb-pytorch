@@ -64,6 +64,10 @@ typedef struct {
 template <typename DT, uint32_t N, uint32_t C, uint32_t H, uint32_t W>
 class HBTensorStatic {
   private:
+    const uint32_t numel = N * C * H * W;
+    const uint32_t strides[4] = {
+      numel / N, numel / (N*C), numel / (N*C*H), 1
+    };
     DT* data;
 
   public:
@@ -71,7 +75,8 @@ class HBTensorStatic {
       data((DT*) ((intptr_t) t->data)) {}
 
     DT& operator()(uint32_t n, uint32_t c, uint32_t h, uint32_t w) {
-      return data[N*n + C*c + H*h + W*w];
+      uint32_t offset = strides[0]*n + strides[1]*c + strides[2]*h + w;
+      return data[offset];
     }
 };
 
