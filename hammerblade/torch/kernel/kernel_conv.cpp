@@ -16,26 +16,24 @@ extern "C" {
           hb_tensor_t* weight,
           hb_vector_t* padding,
           hb_vector_t* strides) {
-    auto y = HBTensor<float>(output);
-    auto x = HBTensor<float>(input);
-    auto w = HBTensor<float>(weight);
-    auto p = HBVector<uint32_t>(padding);
-    auto s = HBVector<uint32_t>(strides);
+    auto y = HBTensor<float, 1, 1, 6, 6>(output);
+    auto x = HBTensor<float, 1, 1, 8, 8>(input);
+    auto w = HBTensor<float, 1, 1, 3, 3>(weight);
 
     // Conv2d parameters
-    auto N = y.dim(0); // number of minibatches
-    auto Cout = y.dim(1); // number of output channels
-    auto Hout = y.dim(2);
-    auto Wout = y.dim(3);
-    auto Cin = x.dim(1); // number of input channels
-    auto Hin = x.dim(2);
-    auto Win = x.dim(3);
-    auto Kh = w.dim(2);
-    auto Kw = w.dim(3);
-    auto Sh = s[0];
-    auto Sw = s[1];
-    auto Ph = p[0];
-    auto Pw = p[1];
+    uint32_t N = 1; // number of minibatches
+    uint32_t Cout = 1; // number of output channels
+    uint32_t Hout = 6;
+    uint32_t Wout = 6;
+    uint32_t Cin = 1; // number of input channels
+    uint32_t Hin = 8;
+    uint32_t Win = 8;
+    uint32_t Kh = 3;
+    uint32_t Kw = 3;
+    uint32_t Sh = 1;
+    uint32_t Sw = 1;
+    uint32_t Ph = 0;
+    uint32_t Pw = 0;
 
     // Start profiling
     bsg_cuda_print_stat_kernel_start();
