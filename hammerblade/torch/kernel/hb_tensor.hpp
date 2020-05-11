@@ -62,7 +62,7 @@ typedef struct {
 // =========================================================
 
 template <typename DT, uint32_t N, uint32_t C, uint32_t H, uint32_t W>
-class HBTensorStatic {
+class HBTensor4d {
   private:
     const uint32_t numel = N * C * H * W;
     const uint32_t strides[4] = {
@@ -71,11 +71,34 @@ class HBTensorStatic {
     DT* data;
 
   public:
-    HBTensorStatic(hb_tensor_t* t) :
+    HBTensor4d(hb_tensor_t* t) :
       data((DT*) ((intptr_t) t->data)) {}
 
     DT& operator()(uint32_t n, uint32_t c, uint32_t h, uint32_t w) {
       uint32_t offset = strides[0]*n + strides[1]*c + strides[2]*h + w;
+      return data[offset];
+    }
+};
+
+template <typename DT, uint32_t R, uint32_t C>
+class HBTensor2d {
+  private:
+    const uint32_t numel = R * C;
+    const uint32_t strides[2] = {
+      numel / R, 1
+    };
+    DT* data;
+
+  public:
+    HBTensor2d(hb_tensor_t* t) :
+      data((DT*) ((intptr_t) t->data)) {}
+
+    uint32_t dim(uint32_t d) {
+      return d == 0 ? R : C;
+    }
+
+    DT& operator()(uint32_t r, uint32_t c) {
+      uint32_t offset = strides[0]*r + strides[1]*c;
       return data[offset];
     }
 };
