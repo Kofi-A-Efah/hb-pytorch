@@ -31,9 +31,9 @@ extern "C" {
     const uint32_t Ph = 0;
     const uint32_t Pw = 0;
 
-    auto y = HBTensorStatic<float, N, Cout, Hout, Wout>(output);
-    auto x = HBTensorStatic<float, N, Cin, Hin, Win>(input);
-    auto w = HBTensorStatic<float, Cout, Cin, Kh, Kw>(weight);
+    auto y = HBTensor4d<float, N, Cout, Hout, Wout>(output);
+    auto x = HBTensor4d<float, N, Cin, Hin, Win>(input);
+    auto w = HBTensor4d<float, Cout, Cin, Kh, Kw>(weight);
 
     // Start profiling
     bsg_cuda_print_stat_kernel_start();
