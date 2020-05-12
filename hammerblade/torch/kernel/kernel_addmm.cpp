@@ -30,10 +30,10 @@ extern "C" {
         bsg_cuda_print_stat_kernel_start();
 
         // v2: single tile, use blocking
-        int r1 = mat1.dim(0);
-        int c1 = mat1.dim(1);
-        int r2 = mat2.dim(0);
-        int c2 = mat2.dim(1);
+        const int r1 = 8;
+        const int c1 = 8;
+        const int r2 = 8;
+        const int c2 = 8;
         hb_assert(c1 == r2);
 
         // calculate number of row and col blocks in each matrix

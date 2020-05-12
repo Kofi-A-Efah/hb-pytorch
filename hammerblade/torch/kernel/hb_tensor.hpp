@@ -91,10 +91,6 @@ class HBTensor2d {
       strides((uint32_t*) ((intptr_t) t->strides)),
       data((DT*) ((intptr_t) t->data)) {}
 
-    uint32_t dim(uint32_t d) {
-      return d == 0 ? R : C;
-    }
-
     DT& operator()(uint32_t r, uint32_t c) {
       uint32_t offset = strides[0]*r + strides[1]*c;
       return data[offset];
