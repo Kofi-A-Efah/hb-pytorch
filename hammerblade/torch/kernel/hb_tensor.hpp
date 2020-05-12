@@ -83,14 +83,12 @@ class HBTensor4d {
 template <typename DT, uint32_t R, uint32_t C>
 class HBTensor2d {
   private:
-    const uint32_t numel = R * C;
-    const uint32_t strides[2] = {
-      numel / R, 1
-    };
+    uint32_t* strides;
     DT* data;
 
   public:
     HBTensor2d(hb_tensor_t* t) :
+      strides((uint32_t*) ((intptr_t) t->strides)),
       data((DT*) ((intptr_t) t->data)) {}
 
     uint32_t dim(uint32_t d) {
